@@ -22,6 +22,10 @@
 #ifdef ENABLE_LANGUAGE_INTEROP_OPS
 #include "core/language_interop_ops/language_interop_ops.h"
 #endif
+#ifdef ONNXRUNTIME_ENABLE_INSTRUMENT
+#include "core/platform/tracing.h"
+#include <TraceLoggingActivity.h>
+#endif
 
 namespace onnxruntime {  // forward declarations
 class GraphTransformer;
@@ -489,6 +493,10 @@ class InferenceSession {
 
 #ifdef ENABLE_LANGUAGE_INTEROP_OPS
   InterOpDomains interop_domains_;
+#endif
+#ifdef ONNXRUNTIME_ENABLE_INSTRUMENT
+  bool session_activity_started_ = false;
+  TraceLoggingActivity<ort_provider> session_activity;
 #endif
 };
 }  // namespace onnxruntime
